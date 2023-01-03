@@ -81,6 +81,7 @@ class FeatureExtraction(torch.nn.Module):
             self.model = self.model.cuda()
         
     def forward(self, image_batch):
+        image_batch = image_batch.cuda() # MR: changed to avoid the error of images being on CPU and weights on GPU
         features = self.model(image_batch)
         if self.normalization and not self.feature_extraction_cnn=='resnet101fpn':
             features = featureL2Norm(features)
